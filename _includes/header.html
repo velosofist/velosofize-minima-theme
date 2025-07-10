@@ -17,11 +17,11 @@
       font-family: sans-serif;
       height: 32px;
       border-radius: 32px;
-      width: fit-content;
       text-decoration: none;
       color: rgba(0, 0, 0, 0.8);
       gap: 14px;
       font-weight: bold;
+      width: max-content;
     }
 
     #velosofize-title {
@@ -53,32 +53,39 @@
       position: absolute;
       top: 110%;
       left: 50%;
+      width: max-content;
       transform: translateX(-50%);
-      flex-direction: row;
+      flex-direction: column;
       background: #fdf6e3;
       color: rgba(0, 0, 0, 0.8);
       border: 2px solid #eee8d5;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      border-radius: 32px;
-      min-width: 180px;
-      width: fit-content;
-      padding: 4px 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+      border-radius: 16px;
+      padding: 4px;
       gap: 8px;
-      z-index: 2001;
+      z-index: 2000;
       box-sizing: border-box;
+      align-items: stretch;
     }
 
     #link-buttons a {
       display: flex;
       align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
+      left: 50px;
+      gap: 8px;
+      height: 42px;
+      width: max-content;
       background: #eee8d5;
-      border-radius: 50%;
+      border-radius: 16px;
       border: 2px solid rgba(0, 0, 0, 0.4);
-      transition: transform 0.15s;
-      padding: 0;
+      padding: 4px;
+      font-size: 16px;
+      font-family: sans-serif;
+      white-space: nowrap;
+      text-decoration: none;
+      color: rgba(0, 0, 0, 0.8);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     #link-buttons a img {
@@ -87,7 +94,8 @@
     }
 
     #link-buttons a:hover {
-      transform: scale(1.1);
+      transition: transform 0.2s;
+      transform: scale(1.02);
     }
   </style>
 
@@ -98,29 +106,25 @@
     <span id="velosofize-title">VELOSOFIZE</span>
     <span id="velosofize-arrow" class="material-symbols-outlined">arrow_drop_down</span>
     <div id="link-buttons">
-      <a href="https://www.google.com/maps/d/u/0/edit?mid=13Ke06MOSLTuBBbr2ITKNV7kLhs_v2Qc&usp=sharing"
+      <a href="https://map.velosofize.com"
         target="_blank" title="Google Maps">
-        <img
-          src="https://www.gstatic.com/marketing-cms/assets/images/48/6b/6a951c294a47991a8229779b508e/maps.webp=s108-fcrop64=1,00000000ffffffff-rw"
-          alt="Google Maps">
+        <img src="/attachments/misc_icons/globe_location_pin.png">
+        Карта / Map
+      </a>
+      <a href="https://www.google.com/maps/d/u/0/viewer?mid=13Ke06MOSLTuBBbr2ITKNV7kLhs_v2Qc&usp=sharing"
+        target="_blank" title="Google Maps">
+        <img src="https://www.gstatic.com/marketing-cms/assets/images/48/6b/6a951c294a47991a8229779b508e/maps.webp=s108-fcrop64=1,00000000ffffffff-rw">
+        Google Maps
       </a>
       <a href="https://earth.google.com/web/@42.68536362,23.34252187,551.21893103a,13559.28278408d,35y,-0h,0t,0r/data=CgRCAggBMigKJgokCiAxM0tlMDZNT1NMVHVCQmJyMklUS05WN2tMaHNfdjJRYyACOgMKATBCAggASggI3rfSkgMQAQ"
         target="_blank" title="Google Earth">
-        <img
-          src="https://www.gstatic.com/marketing-cms/assets/images/32/80/489eca5d4dfab22aa3901c6c882a/g-earth.webp=s108-fcrop64=1,00000000ffffffff-rw"
-          alt="Google Earth">
+        <img src="https://www.gstatic.com/marketing-cms/assets/images/32/80/489eca5d4dfab22aa3901c6c882a/g-earth.webp=s108-fcrop64=1,00000000ffffffff-rw">
+        Google Earth
       </a>
-      <a href="https://github.com/velosofist/velosofize-map/tree/main/export_formats"
+      <a href="https://github.com/velosofist/velosofize"
         target="_blank" title="GitHub export options">
-        <img
-          src="/attachments/github-mark/github-mark.png"
-          alt="GitHub">
-      </a>
-      <a href="https://docs.velosofize.com"
-        target="_blank" title="Written materials">
-        <img
-          src="/attachments/misc_icons/docs_icon_dark.png"
-          alt="Written materials">
+        <img src="/attachments/github-mark/github-mark.png">
+        GitHub
       </a>
     </div>
   </div>
@@ -128,6 +132,14 @@
     document.addEventListener('DOMContentLoaded', function() {
       const projectHeader = document.getElementById('project-header');
       const linkButtons = document.getElementById('link-buttons');
+
+      function syncLinkButtonsWidth() {
+        const headerWidth = projectHeader.offsetWidth;
+        linkButtons.style.width = headerWidth + 'px';
+      }
+
+      syncLinkButtonsWidth(); // Initial sync
+      window.addEventListener('resize', syncLinkButtonsWidth); // Resync on window resize
 
       projectHeader.onclick = function(e) {
         if (e.target.closest('#link-buttons')) return;
